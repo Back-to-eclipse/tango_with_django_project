@@ -1,20 +1,23 @@
 from django.shortcuts import render
 from rango_app.models import Category, Page
 from rango_app.forms import CategoryForm, PageForm
-
-
+from django.core.cache import cache
 # Create your views here.
 def index(request):
-    categories = Category.objects.all()
-    return render(request, 'index.html', {'categories': categories})
+    categories = cache.get('all_categories')
+    if not categories:
+        categories = Category.objects.all()
+        cache.set('all_categories', categories, timeout=60*15)
+
+    pages = Page.objects.select_related('category').prefetch_related('category').all()
+    return render(request, 'index.html', {'categories': categories, 'pages': pages})
 
 def detail(request, page_id):
-    page = Page.objects.get(id=page_id)
+    page = Page.objects.select_related('category').get(id=page_id)
     return render(request, 'detail.html', {'page': page})
 
 def add_category(request):
     form = CategoryForm()
-
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if form.is_valid():
@@ -22,7 +25,6 @@ def add_category(request):
             return index(request)
         else:
             print(form.errors)
-
     return render(request, 'add_category.html', {'form': form})
 
 from django.http import HttpResponse

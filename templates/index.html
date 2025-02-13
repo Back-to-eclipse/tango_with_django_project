@@ -1,21 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rango Home</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <h1>Welcome to Rango!</h1>
-    <p>This is the home page of the Rango app.</p>
-    <img src="{% static 'images/blue.jpg' %}" alt="Blue" style="width:100%; height:auto;">
-    <h2>Categories:</h2>
-    <ul>
-        {% for category in categories %}
-            <li>{{ category.name }}</li>
-        {% endfor %}
-    </ul>
-    
-</body>
-</html>
+
+{% block title %}Home - Rango{% endblock %}
+
+{% block content %}
+<p>This is the home page of the Rango app.</p>
+<img src="{% static 'images/blue.jpg' %}" alt="Blue" style="width:100%; height:auto;">
+
+<h2>Categories:</h2>
+<ul>
+    {% for category in categories %}
+        <li>{{ category.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
