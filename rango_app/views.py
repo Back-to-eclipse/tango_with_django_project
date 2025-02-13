@@ -1,11 +1,15 @@
 from django.shortcuts import render
+from rango_app.models import Category, Page
+
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    categories = Category.objects.all()
+    return render(request, 'index.html', {'categories': categories})
 
 def detail(request, page_id):
-    return render(request, 'detail.html', {'page_id': page_id})
+    page = Page.objects.get(id=page_id)
+    return render(request, 'detail.html', {'page': page})
 
 from django.http import HttpResponse
 

@@ -5,7 +5,10 @@
     <title>Rango Detail</title>
 </head>
 <body>
-    <h1>Page Detail</h1>
-    <p>You are viewing page {{ page_id }}.</p>
+    <h1>{{ page.title }}</h1>
+    <p>URL: <a href="{{ page.url }}">{{ page.url }}</a></p>
+    <p>Views: {{ page.views }}</p>
+    <p><a href="{% url 'index' %}">Back to Home</a></p>
+
 </body>
 </html>

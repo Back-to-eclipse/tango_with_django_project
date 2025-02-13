@@ -7,5 +7,13 @@
 <body>
     <h1>Welcome to Rango!</h1>
     <p>This is the home page of the Rango app.</p>
+    
+    <h2>Categories:</h2>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+    
 </body>
 </html>
