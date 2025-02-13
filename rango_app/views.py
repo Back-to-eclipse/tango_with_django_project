@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rango_app.models import Category, Page
 from rango_app.forms import CategoryForm, PageForm
 from django.core.cache import cache
@@ -34,3 +34,15 @@ def results(request, category_id):
 
 def vote(request, page_id): 
     return HttpResponse(f"You are voting on page {page_id}.")
+
+def categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories.html', {'categories': categories})
+
+def category_detail(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    return render(request, 'category_detail.html', {'category': category})
+
+def page_detail(request, page_id):
+    page = get_object_or_404(Page, id=page_id)
+    return render(request, 'page_detail.html', {'page': page})
