@@ -1,0 +1,15 @@
+<button id="like-btn" data-page-id="{{ page.id }}">Like</button>
+<span id="like-count">{{ page.likes }}</span>
+
+<script>
+document.getElementById('like-btn').addEventListener('click', function() {
+    const pageId = this.getAttribute('data-page-id');
+    fetch(`/rango_app/like_page/?page_id=${pageId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.likes !== undefined) {
+                document.getElementById('like-count').innerText = data.likes;
+            }
+        });
+});
+</script>
